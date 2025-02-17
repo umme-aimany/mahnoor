@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form with JS Validation</title>
+  <style>
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+    .success {
+      color: green;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Contact Form</h2>
+
+  <form id="contactForm" onsubmit="return validateForm()">
+    <label for="name">Full Name:</label>
+    <input type="text" id="name" name="name" required>
+    <span id="nameError" class="error"></span><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <span id="emailError" class="error"></span><br><br>
+
+    <label for="message">Message:</label><br>
+    <textarea id="message" name="message" rows="4" required></textarea>
+    <span id="messageError" class="error"></span><br><br>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <p id="formSuccessMessage" class="success"></p>
+
+  <script>
+    function validateForm() {
+      // Clear previous error messages
+      document.getElementById('nameError').innerText = '';
+      document.getElementById('emailError').innerText = '';
+      document.getElementById('messageError').innerText = '';
+      document.getElementById('formSuccessMessage').innerText = '';
+
+      let isValid = true;
+
+      // Name Validation
+      const name = document.getElementById('name').value;
+      if (name === '') {
+        document.getElementById('nameError').innerText = 'Name is required.';
+        isValid = false;
+      }
+
+      // Email Validation
+      const email = document.getElementById('email').value;
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      if (!email.match(emailPattern)) {
+        document.getElementById('emailError').innerText = 'Please enter a valid email address.';
+        isValid = false;
+      }
+
+      // Message Validation
+      const message = document.getElementById('message').value;
+      if (message === '') {
+        document.getElementById('messageError').innerText = 'Message is required.';
+        isValid = false;
+      }
+
+      // If valid, display success message and prevent form submission for demonstration
+      if (isValid) {
+        document.getElementById('formSuccessMessage').innerText = 'Form submitted successfully!';
+      }
+
+      return isValid;  // return false to prevent actual form submission (for demo purposes)
+    }
+  </script>
+
+</body>
+</html>
